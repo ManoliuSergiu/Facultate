@@ -20,11 +20,15 @@ namespace WindowsFormsApp9
         public Form1()
         {
             InitializeComponent();
+            aux = new Timer();
+            aux.Interval = 50;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             n = int.Parse(textBox1.Text);
+            textBox2.Enabled = true;
+            button2.Enabled = true;
             Init();
         }
 
@@ -67,8 +71,8 @@ namespace WindowsFormsApp9
 
         private void button2_Click(object sender, EventArgs e)
         {
-            aux = new Timer();
-            aux.Interval = 100;
+            button2.Enabled = false;
+            textBox2.Enabled = false;
             aux.Tick += Aux_Tick;
             aux.Start();
             a = 0;
@@ -81,6 +85,8 @@ namespace WindowsFormsApp9
             if (a == int.Parse(textBox2.Text))
             {
                 aux.Stop();
+                textBox2.Enabled = true;
+                button2.Enabled = true;
             }
         }
 
@@ -103,6 +109,11 @@ namespace WindowsFormsApp9
             pictureBox1.Image = Draw();
                 
             
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            aux.Interval = 50+(int)Math.Pow(2,trackBar1.Value/1.45f);
         }
     }
 }
