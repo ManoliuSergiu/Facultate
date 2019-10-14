@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace WindowsFormsApp9
 {
@@ -72,6 +71,7 @@ namespace WindowsFormsApp9
         private void button2_Click(object sender, EventArgs e)
         {
             button2.Enabled = false;
+            button3.Enabled = true;
             textBox2.Enabled = false;
             aux.Tick += Aux_Tick;
             aux.Start();
@@ -99,9 +99,8 @@ namespace WindowsFormsApp9
                 {
                     tmp[i, j] = mat[i, j];
                     if (i > 0 && i < n + 1 && j > 0 && j < n + 1)
-                    {
-                        int aux = mat[i - 1, j] + mat[i + 1, j] + mat[i, j - 1] + mat[i, j + 1];
-                        tmp[i, j] = (aux % 2 == 0) ? 0 : 1;
+                    { 
+                        tmp[i, j] = (checkBox1.Checked)?Lege1(i,j): Lege2(i, j);
                     }
                 }
             }
@@ -111,9 +110,33 @@ namespace WindowsFormsApp9
             
         }
 
+        private int Lege2(int i, int j)
+        {
+            //int aux1 = mat[i - 1, j] + mat[i + 1, j] + mat[i, j - 1] + mat[i, j + 1] - mat[i + 1, j + 1] - mat[i + 1, j - 1] - mat[i - 1, j + 1] - mat[i - 1, j - 1];
+            int aux1 = mat[i - 1, j+1] + mat[i + 1, j-1] + mat[i-1, j - 1] + mat[i+1, j + 1] +mat[i,j];
+            int aux2 = +mat[i - 1, j+1] + mat[i + 1, j-1] + mat[i-1, j - 1] + mat[i+1, j + 1] + mat[i, j];
+           // int aux2 = -mat[i - 1, j] - mat[i + 1, j] -mat[i, j - 1] - mat[i, j + 1] + mat[i + 1, j + 1] + mat[i + 1, j - 1] + mat[i - 1, j + 1] + mat[i - 1, j - 1];
+
+            int aux = (new Random().Next(2) == 0 ? aux1 : aux2);
+            return (aux>0)?1:0;
+        }
+        private int Lege1(int i,int j)
+        {
+            int aux = mat[i - 1, j] + mat[i + 1, j] + mat[i, j - 1] + mat[i, j + 1];
+            return (aux%2==0)? 0 : 1;
+        }
+
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             aux.Interval = 50+(int)Math.Pow(2,trackBar1.Value/1.45f);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            aux.Stop();
+            button2.Enabled = true;
+            textBox2.Enabled = true;
+            button3.Enabled = false;
         }
     }
 }

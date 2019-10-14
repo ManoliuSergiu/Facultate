@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grafica pe calculator", "Grafica pe calculator\Grafica pe calculator.csproj", "{0B36ABF7-A02C-47C9-8CEE-A168F975BCCD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B36ABF7-A02C-47C9-8CEE-A168F975BCCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B36ABF7-A02C-47C9-8CEE-A168F975BCCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B36ABF7-A02C-47C9-8CEE-A168F975BCCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B36ABF7-A02C-47C9-8CEE-A168F975BCCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F82CFF3C-4BDF-4803-9ECB-B4B28BF812C6}
+	EndGlobalSection
+EndGlobal
