@@ -12,48 +12,48 @@ namespace Grafica_pe_calculator_tema_1
 {
     public partial class Form1 : Form
     {
-        int x1, x2, y1, y2; // punctul a(x1,y1),b(x2,y2)
+        int x0, x1, y0, y1; // punctul a(x0,y0),b(x1,y1)
         long tick = 0, tick1 = 0;
         Bitmap map;
         Timer aux; //Timer pentru limitarea randarii 
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            x2 = e.X;
-            y2 = e.Y;
+            x1 = e.X;
+            y1 = e.Y;
             MakeLine();
         }
 
         private void MakeLine()
         {
             map = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            BersenhamLine(x1,y1,x2,y2, trackBar1.Value);
+            BersenhamLine(x0, y0, x1, y1, trackBar1.Value);
             pictureBox1.Image = map;
         }
 
-        private void BersenhamLine(int x1, int y1, int x2, int y2, int thickness)
+        private void BersenhamLine(int x0, int y0, int x1, int y1, int thickness)
         {
-            if (Math.Abs(y2 - y1) < Math.Abs(x2 - x1))
+            if (Math.Abs(y1 - y0) < Math.Abs(x1 - x0))
             {
-                if (x1 > x2)
-                        plotLineHigh(x2, y2, x1, y1, thickness);
+                if (x0 > x1)
+                    plotLineHigh(x1, y1, x0, y0, thickness);
                 else
-                        plotLineHigh(x1, y1, x2, y2, thickness);
-                    
+                    plotLineHigh(x0, y0, x1, y1, thickness);
+
             }
             else
             {
-                if (y1 > y2)
-                        plotLineLow(x2, y2, x1, y1, thickness);
+                if (y0 > y1)
+                    plotLineLow(x1, y1, x0, y0, thickness);
                 else
-                        plotLineLow(x1, y1, x2, y2, thickness);
-                    
+                    plotLineLow(x0, y0, x1, y1, thickness);
+
             }
         }
 
-        private void plotLineLow(int x1, int y1, int x2, int y2, int thickness)
+        private void plotLineLow(int x0, int y0, int x1, int y1, int thickness)
         {
-            int dx = x2 - x1;
-            int dy = y2 - y1;
+            int dx = x1 - x0;
+            int dy = y1 - y0;
             int xi = 1;
             if (dx < 0)
             {
@@ -61,16 +61,12 @@ namespace Grafica_pe_calculator_tema_1
                 dx = -dx;
             }
             int D = 2 * dx - dy;
-            int x = x1;
-            for (int y = y1; y < y2; y++)
+            int x = x0;
+            for (int y = y0; y < y1; y++)
             {
-                for (int i = -(thickness)/2; i <= (thickness) / 2; i++)
+                for (int i = -(thickness) / 2; i <= (thickness) / 2; i++)
                 {
-
-                    for (int j = -(thickness) / 2; j <= (thickness) / 2; j++)
-                    {
-                        map.SetPixel(x + i, y + j, Color.Black);
-                    }
+                    map.SetPixel(x + i, y, Color.Black);
                 }
                 if (D > 0)
                 {
@@ -81,10 +77,10 @@ namespace Grafica_pe_calculator_tema_1
             }
         }
 
-        private void plotLineHigh(int x1, int y1, int x2, int y2, int thickness)
+        private void plotLineHigh(int x0, int y0, int x1, int y1, int thickness)
         {
-            int dx = x2 - x1;
-            int dy = y2 - y1;
+            int dx = x1 - x0;
+            int dy = y1 - y0;
             int yi = 1;
             if (dy < 0)
             {
@@ -92,18 +88,14 @@ namespace Grafica_pe_calculator_tema_1
                 dy = -dy;
             }
             int D = 2 * dy - dx;
-            int y = y1;
-            for (int x = x1; x < x2; x++)
+            int y = y0;
+            for (int x = x0; x < x1; x++)
             {
                 for (int i = -(thickness) / 2; i <= (thickness) / 2; i++)
                 {
 
-                    for (int j = -(thickness) / 2; j <= (thickness) / 2; j++)
-                    {
-                        
-                        map.SetPixel(x + i, y + j, Color.Black);
-                        
-                    }
+                    map.SetPixel(x, y+i, Color.Black);
+                    
                 }
                 if (D > 0)
                 {
@@ -117,19 +109,31 @@ namespace Grafica_pe_calculator_tema_1
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             aux.Start();
-            x1 = e.X;
-            y1 = e.Y;
+            x0 = e.X;
+            y0 = e.Y;
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (tick < tick1) 
+                if (tick < tick1)
                 {
                     tick = tick1;
-                    x2 = e.X;
-                    y2 = e.Y;
+
+                    if (e.X > trackBar1.Value && e.X < pictureBox1.Width)
+                        x1 = e.X;
+                    else if (e.X >= pictureBox1.Width)
+                        x1 = pictureBox1.Width - 1 - trackBar1.Value;
+                    else
+                        x1 = 1+ trackBar1.Value;
+                    if (e.Y > trackBar1.Value && e.Y < pictureBox1.Height)
+                        y1 = e.Y;
+                    else if (e.Y >= pictureBox1.Height)
+                        y1 = pictureBox1.Height - 1 - trackBar1.Value;
+                    else
+                        y1 = 1+ trackBar1.Value;
+
                     MakeLine();
                 }
             }
